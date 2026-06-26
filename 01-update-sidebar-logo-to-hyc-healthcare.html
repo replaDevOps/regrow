@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReGrow Operations Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+    .sidebar-blur {
+      backdrop-filter: blur(8px);
+    }
+    .table-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .table-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .table-scroll::-webkit-scrollbar-thumb {
+      background: #404040;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex bg-[#0a0a0a] text-slate-100">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 fixed inset-y-0 left-0 bg-[#0f0f0f] border-r border-white/5 z-50 overflow-y-auto">
+      <div class="p-6">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/879a3aa0-7a11-4262-94c7-4c45a79b3cdc/1782496596886-afa044f4/ChatGPT_Image_Jun_26__2026__10_55_51_PM.png" alt="HyC Logo" class="h-12 w-auto mb-8">
+        
+        <nav class="space-y-1">
+          <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 px-3">Main Menu</p>
+          
+          <a id="nav-command-centre" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg bg-blue-600/10 text-blue-400 group transition-all border border-blue-500/20">
+            <iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon>
+            <span>Command Centre</span>
+          </a>
+
+          <a id="nav-patient-sales" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:users" class="text-lg"></iconify-icon>
+            <span>Patient Sales</span>
+          </a>
+
+          <a id="nav-completed-cases" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:check-circle" class="text-lg"></iconify-icon>
+            <span>Completed Cases</span>
+          </a>
+
+          <a id="nav-finance" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:banknote" class="text-lg"></iconify-icon>
+            <span>Funding & Finance</span>
+          </a>
+
+          <a id="nav-income" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:trending-up" class="text-lg"></iconify-icon>
+            <span>Income Tracking</span>
+          </a>
+
+          <a id="nav-expenses" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:receipt" class="text-lg"></iconify-icon>
+            <span>Patient Expenses</span>
+          </a>
+
+          <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-8 mb-4 px-3">Resources</p>
+
+          <a id="nav-hair-techs" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:user-cog" class="text-lg"></iconify-icon>
+            <span>Hair Techs</span>
+          </a>
+
+          <a id="nav-dispatch" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:calendar-check" class="text-lg"></iconify-icon>
+            <span>Tech Dispatch Log</span>
+          </a>
+
+          <a id="nav-automations" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:zap" class="text-lg"></iconify-icon>
+            <span>Email Automations</span>
+          </a>
+
+          <a id="nav-workflow" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:map" class="text-lg"></iconify-icon>
+            <span>Workflow Guide</span>
+          </a>
+
+          <div class="mt-auto pt-8">
+            <a id="nav-settings" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+              <iconify-icon icon="lucide:settings" class="text-lg"></iconify-icon>
+              <span>Settings</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col min-w-0">
+      
+      <!-- Header -->
+      <header class="sticky top-0 z-40 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5 px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <h1 class="text-xl font-semibold tracking-tight">Command Centre</h1>
+          <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-gray-400 font-medium uppercase">Ops Monitor</span>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <!-- Search Bar -->
+          <div class="relative hidden lg:block">
+            <iconify-icon icon="lucide:search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></iconify-icon>
+            <input type="text" placeholder="Search patients, procedures..." class="bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-64 transition-all">
+          </div>
+
+          <!-- Date Filter -->
+          <div class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10 transition-colors">
+            <iconify-icon icon="lucide:calendar" class="text-gray-400"></iconify-icon>
+            <span class="text-sm text-gray-200">Oct 1 - Oct 31, 2023</span>
+            <iconify-icon icon="lucide:chevron-down" class="text-gray-500 text-xs"></iconify-icon>
+          </div>
+
+          <!-- Action Icons -->
+          <div class="flex items-center gap-4">
+            <button class="relative p-2 text-gray-400 hover:text-white">
+              <iconify-icon icon="lucide:bell" class="text-xl"></iconify-icon>
+              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0a0a0a]"></span>
+            </button>
+            <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 border border-white/20 flex items-center justify-center text-xs font-bold">
+              JS
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard View -->
+      <div class="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+        
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Card 1 -->
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-blue-500/10 rounded-lg">
+                <iconify-icon icon="lucide:users-2" class="text-blue-400 text-xl"></iconify-icon>
+              </div>
+              <span class="text-emerald-400 text-xs font-semibold flex items-center gap-1">
+                <iconify-icon icon="lucide:trending-up" class="text-xs"></iconify-icon>
+                +12%
+              </span>
+            </div>
+            <div class="space-y-1">
+              <p class="text-gray-500 text-sm font-medium">Patients Sold</p>
+              <h3 class="text-3xl font-bold tracking-tight">7</h3>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-purple-500/10 rounded-lg">
+                <iconify-icon icon="lucide:calendar-check-2" class="text-purple-400 text-xl"></iconify-icon>
+              </div>
+              <span class="text-emerald-400 text-xs font-semibold">5 Active</span>
+            </div>
+            <div class="space-y-1">
+              <p class="text-gray-500 text-sm font-medium">Booked Procedures</p>
+              <h3 class="text-3xl font-bold tracking-tight">5</h3>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-emerald-500/10 rounded-lg">
+                <iconify-icon icon="lucide:dollar-sign" class="text-emerald-400 text-xl"></iconify-icon>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <p class="text-gray-500 text-sm font-medium">Total Cash Collected</p>
+              <h3 class="text-3xl font-bold tracking-tight uppercase">$4,950</h3>
+              <p class="text-[10px] text-gray-500 mt-2">Total Financed: $36,200</p>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-amber-500/10 rounded-lg">
+                <iconify-icon icon="lucide:flask-conical" class="text-amber-400 text-xl"></iconify-icon>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <p class="text-gray-500 text-sm font-medium">Lab Requests</p>
+              <h3 class="text-3xl font-bold tracking-tight">1 Pending</h3>
+              <p class="text-[10px] text-amber-500/80 mt-2">1 Results Pending Review</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Row 2 - Financial Summary -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="lg:col-span-2 bg-gradient-to-r from-blue-600/10 to-transparent p-6 rounded-2xl border border-blue-500/20 flex items-center justify-between">
+             <div>
+                <p class="text-blue-400 text-sm font-semibold mb-1">Completed Case Profitability</p>
+                <h2 class="text-4xl font-bold">$11,430 <span class="text-sm text-gray-500 font-normal">Net After Cost</span></h2>
+             </div>
+             <div class="text-right">
+                <p class="text-gray-500 text-sm font-medium mb-1">Gross Completed Revenue</p>
+                <p class="text-2xl font-bold text-gray-300">$13,000</p>
+             </div>
+          </div>
+          <div class="bg-red-500/5 p-6 rounded-2xl border border-red-500/20 flex flex-col justify-center">
+             <p class="text-red-400 text-sm font-semibold mb-1">Funding Past Due</p>
+             <div class="flex items-center gap-3">
+                <h2 class="text-4xl font-bold text-red-500">5</h2>
+                <span class="text-sm text-red-400/60 leading-tight">Patients awaiting<br>disbursement</span>
+             </div>
+          </div>
+        </div>
+
+        <!-- Watchlists Sections -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          
+          <!-- Funding Watchlist -->
+          <div class="bg-[#0f0f0f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+            <div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/2">
+              <div class="flex items-center gap-2">
+                <iconify-icon icon="lucide:activity" class="text-blue-500"></iconify-icon>
+                <h3 class="font-semibold">Funding Watchlist</h3>
+              </div>
+              <button class="text-xs text-blue-500 font-medium hover:underline">View All Reports</button>
+            </div>
+            <div class="overflow-x-auto table-scroll">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="text-gray-500 border-b border-white/5 uppercase text-[10px] font-bold">
+                    <th class="px-6 py-4">Patient</th>
+                    <th class="px-6 py-4">Provider</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">ETA/Age</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Jordan Sample</div>
+                      <div class="text-[10px] text-gray-500">Sold by Sarah M.</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300">Cherry Finance</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">Submitted</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Oct 25</div>
+                      <div class="text-[10px] text-gray-500">3 Days Out</div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Morgan Example</div>
+                      <div class="text-[10px] text-gray-500">Sold by Alex K.</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300">Care Credit</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-red-500/10 text-red-500 border border-red-500/20">Delayed</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-red-400">Oct 12</div>
+                      <div class="text-[10px] text-red-500/60 font-medium tracking-tight">10 DAYS PAST DUE</div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Casey Placeholder</div>
+                      <div class="text-[10px] text-gray-500">Sold by Sarah M.</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300">United Finance</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Approved</span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300 font-mono">$11,000</td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Alex Training</div>
+                      <div class="text-[10px] text-gray-500">Sold by Sarah M.</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300">Cherry Finance</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20">Funded</span>
+                    </td>
+                    <td class="px-6 py-4 text-emerald-400 text-xs">Completed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Lab Work Watchlist -->
+          <div class="bg-[#0f0f0f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+            <div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/2">
+              <div class="flex items-center gap-2">
+                <iconify-icon icon="lucide:flask-round" class="text-amber-500"></iconify-icon>
+                <h3 class="font-semibold">Lab Work Watchlist</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span class="text-xs text-gray-400">1 Pending Results</span>
+              </div>
+            </div>
+            <div class="overflow-x-auto table-scroll">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="text-gray-500 border-b border-white/5 uppercase text-[10px] font-bold">
+                    <th class="px-6 py-4">Patient</th>
+                    <th class="px-6 py-4">Sent Date</th>
+                    <th class="px-6 py-4">Lab Status</th>
+                    <th class="px-6 py-4">Action Required</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Taylor Demo</div>
+                      <div class="text-[10px] text-gray-500 underline">Proc: Oct 30</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400">Oct 20, 2023</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">Pending Results</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold uppercase text-gray-300 hover:bg-white/10">Follow Up</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Jamie Sandbox</div>
+                      <div class="text-[10px] text-gray-500">Consult Package</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400">-</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-red-500/10 text-red-500 border border-red-500/20">Overdue</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <button class="px-3 py-1 bg-red-600/20 border border-red-500/30 rounded text-[10px] font-bold uppercase text-red-400 hover:bg-red-600/30 transition-all">Request Lab</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Riley Test</div>
+                      <div class="text-[10px] text-gray-500">Maintenance Visit</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400">Oct 18, 2023</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">Submitted</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-xs text-gray-500 italic">Waiting for Lab Sync</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Operations Watchlist (Spans full width) -->
+          <div class="bg-[#0f0f0f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl xl:col-span-2">
+            <div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/2">
+              <div class="flex items-center gap-2">
+                <iconify-icon icon="lucide:clipboard-list" class="text-purple-500"></iconify-icon>
+                <h3 class="font-semibold">Operations Watchlist</h3>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    <span class="text-[10px] text-gray-500">Submitted</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="text-[10px] text-gray-500">Approved</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span class="text-[10px] text-gray-500">Delayed</span>
+                </div>
+              </div>
+            </div>
+            <div class="overflow-x-auto table-scroll">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="text-gray-500 border-b border-white/5 uppercase text-[10px] font-bold">
+                    <th class="px-6 py-4">Category</th>
+                    <th class="px-6 py-4">Patient</th>
+                    <th class="px-6 py-4">Procedure</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Action Required</th>
+                    <th class="px-6 py-4">Notes</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-0.5 rounded bg-white/5 text-gray-400 text-[10px] border border-white/10 uppercase">Staffing</span>
+                    </td>
+                    <td class="px-6 py-4 font-medium">Jordan Sample</td>
+                    <td class="px-6 py-4">FUE Scalp <span class="text-[10px] text-gray-500 ml-1">Oct 30</span></td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">Submitted</span>
+                    </td>
+                    <td class="px-6 py-4 text-amber-400">Assign Hair Tech</td>
+                    <td class="px-6 py-4 text-gray-500 truncate max-w-xs italic">Awaiting technician confirmation for LA site...</td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-0.5 rounded bg-white/5 text-gray-400 text-[10px] border border-white/10 uppercase">Logistics</span>
+                    </td>
+                    <td class="px-6 py-4 font-medium">Casey Placeholder</td>
+                    <td class="px-6 py-4">FUE Scalp <span class="text-[10px] text-gray-500 ml-1">Nov 02</span></td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Approved</span>
+                    </td>
+                    <td class="px-6 py-4 text-emerald-400">Confirm Travel</td>
+                    <td class="px-6 py-4 text-gray-500 truncate max-w-xs italic">Patient flying in from AZ. Hotel booked.</td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors">
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-0.5 rounded bg-white/5 text-gray-400 text-[10px] border border-white/10 uppercase">Financial</span>
+                    </td>
+                    <td class="px-6 py-4 font-medium">Morgan Example</td>
+                    <td class="px-6 py-4">FUE Eyebrows <span class="text-[10px] text-gray-500 ml-1">TBD</span></td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-red-500/10 text-red-500 border border-red-500/20">Delayed</span>
+                    </td>
+                    <td class="px-6 py-4 text-red-400 font-bold">RE-UPLOAD ID</td>
+                    <td class="px-6 py-4 text-gray-500 truncate max-w-xs italic">Care Credit flagged signature mismatch.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

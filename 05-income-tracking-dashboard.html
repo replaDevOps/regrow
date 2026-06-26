@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Tracking | ReGrow Operations</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+    .table-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .table-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .table-scroll::-webkit-scrollbar-thumb {
+      background: #404040;
+      border-radius: 10px;
+    }
+    .chart-gradient {
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 100%);
+    }
+  </style>
+  <style>sd-component { display: block; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js" defer init></script>
+</head>
+<body>
+  <div class="min-h-screen flex bg-[#0a0a0a] text-slate-100">
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 fixed inset-y-0 left-0 bg-[#0f0f0f] border-r border-white/5 z-50 overflow-y-auto">
+      <div class="p-6 h-full flex flex-col">
+        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/879a3aa0-7a11-4262-94c7-4c45a79b3cdc/1782496596886-afa044f4/ChatGPT_Image_Jun_26__2026__10_55_51_PM.png" alt="HyC Healthcare Management Consultants" class="h-10 w-auto mb-8 object-contain">
+        
+        <nav class="flex-1 space-y-1">
+          <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 px-3">Main Menu</p>
+          
+          <a id="nav-command-centre" href="/" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon>
+            <span>Command Centre</span>
+          </a>
+
+          <a id="nav-patient-sales" href="https://draft-e2bb3cc4-e28c-4dd5-99fe-274c5c765a51.preview.superdesign.dev" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:users" class="text-lg"></iconify-icon>
+            <span>Patient Sales</span>
+          </a>
+
+          <a id="nav-completed-cases" href="https://draft-8a81b70e-e465-46dd-8827-43da8918254e.preview.superdesign.dev" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:check-circle" class="text-lg"></iconify-icon>
+            <span>Completed Cases</span>
+          </a>
+
+          <a id="nav-finance" href="https://draft-2f1af43f-bcc8-427d-9b51-25ffa2694ba8.preview.superdesign.dev" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:banknote" class="text-lg"></iconify-icon>
+            <span>Funding & Finance</span>
+          </a>
+
+          <a id="nav-income" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg bg-blue-600/10 text-blue-400 border border-blue-500/20 group transition-all">
+            <iconify-icon icon="lucide:trending-up" class="text-lg"></iconify-icon>
+            <span>Income Tracking</span>
+          </a>
+
+          <a id="nav-expenses" href="https://draft-fa0dbfbe-68de-44e3-b31f-d1c9dc54309a.preview.superdesign.dev" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:receipt" class="text-lg"></iconify-icon>
+            <span>Patient Expenses</span>
+          </a>
+
+          <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-8 mb-4 px-3">Resources</p>
+
+          <a id="nav-hair-techs" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:user-cog" class="text-lg"></iconify-icon>
+            <span>Hair Techs</span>
+          </a>
+
+          <a id="nav-dispatch" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:calendar-check" class="text-lg"></iconify-icon>
+            <span>Tech Dispatch Log</span>
+          </a>
+
+          <a id="nav-automations" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:zap" class="text-lg"></iconify-icon>
+            <span>Email Automations</span>
+          </a>
+
+          <a id="nav-workflow" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+            <iconify-icon icon="lucide:map" class="text-lg"></iconify-icon>
+            <span>Workflow Guide</span>
+          </a>
+
+          <div class="mt-auto pt-8">
+            <a id="nav-settings" href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 group transition-all">
+              <iconify-icon icon="lucide:settings" class="text-lg"></iconify-icon>
+              <span>Settings</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col min-w-0">
+      <!-- component: TopHeader (cda1bbd1-3681-4260-a4e1-2eddba4fa23c) -->
+<div v-scope="{ ...{&quot;pageTitle&quot;:&quot;Income Tracking&quot;,&quot;pageBadge&quot;:&quot;Cash Log&quot;,&quot;searchPlaceholder&quot;:&quot;Search patients, procedures...&quot;,&quot;dateRange&quot;:&quot;Oct 1 - Oct 31, 2023&quot;,&quot;showNotificationBadge&quot;:true,&quot;userInitials&quot;:&quot;JS&quot;}, $emit() {} }">
+<header class="sticky top-0 z-40 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5 px-8 h-20 flex items-center justify-between">
+  <div class="flex items-center gap-4">
+    <h1 class="text-xl font-semibold tracking-tight text-white">{{ pageTitle }}</h1>
+    <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-gray-400 font-medium uppercase">{{ pageBadge }}</span>
+  </div>
+
+  <div class="flex items-center gap-6">
+    <!-- Search Bar -->
+    <div class="relative hidden lg:block">
+      <iconify-icon icon="lucide:search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></iconify-icon>
+      <input 
+        type="text" 
+        :placeholder="searchPlaceholder" 
+        @input="$emit('search', { query: $event.target.value })"
+        class="bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 w-64 transition-all"
+      >
+    </div>
+
+    <!-- Date Filter -->
+    <div 
+      class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10 transition-colors"
+      @click="$emit('clickDateFilter')"
+    >
+      <iconify-icon icon="lucide:calendar" class="text-gray-400"></iconify-icon>
+      <span class="text-sm text-gray-200">{{ dateRange }}</span>
+      <iconify-icon icon="lucide:chevron-down" class="text-gray-500 text-xs"></iconify-icon>
+    </div>
+
+    <!-- Action Icons -->
+    <div class="flex items-center gap-4">
+      <button 
+        class="relative p-2 text-gray-400 hover:text-white"
+        @click="$emit('clickNotifications')"
+      >
+        <iconify-icon icon="lucide:bell" class="text-xl"></iconify-icon>
+        <span v-if="showNotificationBadge" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0a0a0a]"></span>
+      </button>
+      <div 
+        class="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 border border-white/20 flex items-center justify-center text-xs font-bold text-white cursor-pointer hover:opacity-90 transition-opacity"
+        @click="$emit('clickProfile')"
+      >
+        {{ userInitials }}
+      </div>
+    </div>
+  </div>
+</header>
+</div>
+<!-- /component: TopHeader (cda1bbd1-3681-4260-a4e1-2eddba4fa23c) -->
+      
+      <div class="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <p class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">Today's Income</p>
+            <div class="flex items-end justify-between">
+              <h3 class="text-2xl font-bold">$2,450</h3>
+              <span class="text-emerald-400 text-xs font-semibold flex items-center gap-1"><iconify-icon icon="lucide:arrow-up-right"></iconify-icon>14%</span>
+            </div>
+          </div>
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <p class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">Cash Payments</p>
+            <div class="flex items-end justify-between">
+              <h3 class="text-2xl font-bold">$1,850</h3>
+              <span class="text-emerald-400/60 text-[10px]">8 Transactions</span>
+            </div>
+          </div>
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <p class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">Financing Funding</p>
+            <div class="flex items-end justify-between">
+              <h3 class="text-2xl font-bold">$4,200</h3>
+              <span class="text-blue-400 text-[10px]">Pending Clear</span>
+            </div>
+          </div>
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl">
+            <p class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">Balance Payments</p>
+            <div class="flex items-end justify-between">
+              <h3 class="text-2xl font-bold">$1,200</h3>
+              <span class="text-amber-400 text-[10px]">3 Pending</span>
+            </div>
+          </div>
+          <div class="bg-[#0f0f0f] p-5 rounded-2xl border border-white/5 shadow-xl border-blue-500/20 bg-blue-500/5">
+            <p class="text-blue-400/80 text-xs font-medium uppercase tracking-wider mb-2">Monthly Total</p>
+            <div class="flex items-end justify-between">
+              <h3 class="text-2xl font-bold">$18,950</h3>
+              <iconify-icon icon="lucide:pie-chart" class="text-blue-400"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#0f0f0f] rounded-2xl border border-white/5 p-6 flex flex-col md:flex-row items-center gap-8">
+          <div class="flex-1 w-full space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-semibold text-gray-400">Income Trend (30 Days)</h4>
+              <span class="text-xs text-emerald-400">+8.2% vs last month</span>
+            </div>
+            <div class="h-24 w-full flex items-end gap-1 px-2 chart-gradient rounded-lg border border-white/5">
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[40%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[35%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[55%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[45%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[70%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[60%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[85%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[75%]"></div>
+              <div class="flex-1 bg-blue-600 hover:bg-blue-400 transition-all rounded-t-sm h-[95%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[80%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[65%]"></div>
+              <div class="flex-1 bg-blue-500/20 hover:bg-blue-500/40 transition-all rounded-t-sm h-[50%]"></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 min-w-[300px]">
+            <div class="p-4 rounded-xl bg-white/2 border border-white/5">
+              <p class="text-[10px] text-gray-500 uppercase">Highest Day</p>
+              <p class="text-lg font-bold">$4,200</p>
+            </div>
+            <div class="p-4 rounded-xl bg-white/2 border border-white/5">
+              <p class="text-[10px] text-gray-500 uppercase">Avg Transaction</p>
+              <p class="text-lg font-bold">$1,458</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5">
+            <nav class="flex gap-8">
+              <a id="tab-daily" href="#" class="pb-4 text-sm font-medium border-b-2 border-blue-500 text-white">Daily Summary</a>
+              <a id="tab-weekly" href="#" class="pb-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors">Weekly Summary</a>
+              <a id="tab-monthly" href="#" class="pb-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors">Monthly Summary</a>
+              <a id="tab-all" href="#" class="pb-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors">All Transactions</a>
+            </nav>
+            <button id="btn-add-income" class="mb-4 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+              <iconify-icon icon="lucide:plus"></iconify-icon>
+              Add Income Entry
+            </button>
+          </div>
+
+          <div class="bg-[#0f0f0f] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+            <div class="overflow-x-auto table-scroll">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-white/2 sticky top-0">
+                  <tr class="text-gray-500 border-b border-white/5 uppercase text-[10px] font-bold tracking-wider">
+                    <th class="px-6 py-4">Date Received</th>
+                    <th class="px-6 py-4">Patient</th>
+                    <th class="px-6 py-4">Type</th>
+                    <th class="px-6 py-4">Sale Details</th>
+                    <th class="px-6 py-4 text-right">Amount</th>
+                    <th class="px-6 py-4">Bank / Ref</th>
+                    <th class="px-6 py-4">Entered By</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                  <tr class="hover:bg-white/2 transition-colors cursor-pointer">
+                    <td class="px-6 py-4 text-gray-300">Oct 30, 2023</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Jordan Sample</div>
+                      <div class="text-[10px] text-gray-500 font-mono">P-0001</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Cash</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Cash Payment</div>
+                      <div class="text-[10px] text-gray-500">FUE Scalp</div>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono font-bold text-emerald-400">$2,100.00</td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-400">Chase Operating</div>
+                      <div class="text-[10px] text-gray-600">#TRX-98231</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-[8px] font-bold">AT</div>
+                        <span class="text-gray-400">Ava Tech</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors cursor-pointer">
+                    <td class="px-6 py-4 text-gray-300">Oct 29, 2023</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Casey Placeholder</div>
+                      <div class="text-[10px] text-gray-500 font-mono">P-0004</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20">Financing</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Cherry Finance</div>
+                      <div class="text-[10px] text-gray-500 tracking-tight">Disbursement Received</div>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono font-bold text-blue-400">$4,200.00</td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-400">Financing Settlement</div>
+                      <div class="text-[10px] text-gray-600">#CH-44122</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-[8px] font-bold">JL</div>
+                        <span class="text-gray-400">John L.</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors cursor-pointer">
+                    <td class="px-6 py-4 text-gray-300">Oct 28, 2023</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Taylor Demo</div>
+                      <div class="text-[10px] text-gray-500 font-mono">P-0002</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">Balance Payment</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Care Credit</div>
+                      <div class="text-[10px] text-gray-500">Final Balance</div>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono font-bold text-amber-400">$1,200.00</td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-400">Chase Operating</div>
+                      <div class="text-[10px] text-gray-600">#REF-00122</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[8px] font-bold">SM</div>
+                        <span class="text-gray-400">Sarah M.</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors cursor-pointer">
+                    <td class="px-6 py-4 text-gray-300">Oct 27, 2023</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Morgan Example</div>
+                      <div class="text-[10px] text-gray-500 font-mono">P-0003</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Cash</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Direct Deposit</div>
+                      <div class="text-[10px] text-gray-500">FUE Eyebrows</div>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono font-bold text-emerald-400">$1,850.00</td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-400">Bank Transfer</div>
+                      <div class="text-[10px] text-gray-600">#BNK-00922</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center text-[8px] font-bold">PE</div>
+                        <span class="text-gray-400">Priya E.</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/2 transition-colors cursor-pointer">
+                    <td class="px-6 py-4 text-gray-300">Oct 26, 2023</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium">Riley Test</div>
+                      <div class="text-[10px] text-gray-500 font-mono">P-0005</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Cash</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-300">Manual Entry</div>
+                      <div class="text-[10px] text-gray-500">Maintenance</div>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono font-bold text-emerald-400">$900.00</td>
+                    <td class="px-6 py-4">
+                      <div class="text-gray-400">Petty Cash</div>
+                      <div class="text-[10px] text-gray-600">#CSH-11002</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-gray-500/20 text-gray-400 flex items-center justify-center text-[8px] font-bold">TS</div>
+                        <span class="text-gray-400">Tech Support</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
